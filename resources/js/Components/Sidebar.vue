@@ -3,8 +3,8 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link">
-            <img :src="'/images/logo/logo_consultorio.png'" alt="Consultorio" class="brand-image" style="opacity: .8">
-            <span class="brand-text font-weight-light">BoxHealthApp</span>
+            <img :src="'/images/logo/logo.png'" alt="Consultorio" class="brand-image" style="opacity: .8">
+            <span class="brand-text font-weight-light">Nombre de la Empresa</span>
         </a>
 
         <!-- Sidebar -->
