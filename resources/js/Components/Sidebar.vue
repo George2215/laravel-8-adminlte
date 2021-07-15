@@ -40,7 +40,7 @@
                     </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
+                        <li class="nav-item" v-if="$page.props.auth.hasRole.superAdmin || $page.props.auth.hasRole.manager">
                             <a href="#" class="nav-link">
                             <i class="far fa-building nav-icon"></i>
                             <p>Datos Consultorio</p>

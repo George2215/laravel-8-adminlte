@@ -7,8 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 
+use App\Models\Role;
+use App\Models\User;
+
 class UserController extends Controller
 {
+    public function __construct() {
+        $this->middleware(['role:Super-Admin|Manager']);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -20,6 +27,11 @@ class UserController extends Controller
         /*return Inertia::render("Programs/Index", [
             "programs" => Program::withTrashed()->paginate(10)
         ]);*/
+
+        /**return Inertia::render('Admins/Users/Index', [
+            'users' => User::where('is_admin', 0)->latest()->paginate(5),
+            'roles' => Role::all()
+        ]); */
     }
 
     /**
@@ -40,7 +52,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*
+        if (auth()->user()->hasAnyRole(['super-admin', 'admin'])) {
+            $this->validate($request, [
+                'name' => ['required', 'max:50'],
+                'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
+            ]);
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'is_admin' => 0,
+                'password' => Hash::make('password')
+            ]);
+            $role = Role::where('id', 5)->first();
+            $user->syncRoles($role);
+            return back();
+        }
+        return back();
+         */
     }
 
     /**
@@ -69,22 +98,50 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        /*
+        if (auth()->user()->hasAnyRole(['super-admin', 'admin'])) {
+            $this->validate($request, [
+                'name' => ['required', 'max:50'],
+                'email' => ['required', 'string', 'email', 'max:50'],
+            ]);
+            if ($request->roles[0] === null) {
+                return back()->withErrors(['roles' => 'The role field is required']);
+            }
+            if ($request->roles[0]['id'] != 5) {
+                $adminRole = Role::where('id', $request->roles[0]['id'])->first();
+                $user->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'is_admin' => 1,
+                ]);
+                $user->syncRoles($adminRole);
+                return back();
+            }
+            return back();
+        }
+        return back();
+        */
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        /*
+        if (auth()->user()->hasAnyRole(['super-admin', 'admin'])) {
+            $user->delete();
+            return back();
+        }
+        return back();
+        */
     }
 }

@@ -28,11 +28,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+Route::middleware(['auth:sanctum', 'verified','role:Super-Admin'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])->group(function() {
+Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified', 'role:Super-Admin|Manager'])->group(function() {
     Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     
     Route::group(['middleware'=>['role:Manager']],function(){

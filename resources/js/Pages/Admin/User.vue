@@ -9,7 +9,7 @@
         <template #subitem-active>
             Usuarios
         </template>
-
+        {{ $page.props.auth }}
     </admin-layout>
 </template>
 <script>
@@ -19,6 +19,8 @@
             AdminLayout,
         },
         methods: {
+        },
+        mounted(){
         }
     }
 </script>
